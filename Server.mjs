@@ -1,28 +1,32 @@
 import express from 'express'
+import cors from "cors";
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.use(express.json());
+app.use(cors())
 
 const todos = []
 
 //yaha all todo get hu rha hn
-app.get('/get-todo', (req, res) => {
-    res.send(todos)
+app.get('/api/todos', (req, res) => {
+    const message = !todos.length ? "todos empty" : "";
+    res.send({ Data: todos, Message: message })
 })
 
 //yaha add kr rha hn 
-app.post('/add-todo', (req, res) => {
-    todos.push({
+app.post('/api/todo', (req, res) => {
+    const obj = {
         todoDetail: req.body.data,
         id: String(new Date().getTime())
-    })
-    res.send("add hu rha ha")
+    };
+    todos.push(obj)
+    res.send({ Data: todos, Message: "todo add successfully!" })
 })
 
 //yaha edit kr rha hn
-app.patch('/edit-todo/:id', (req, res) => {
+app.patch('/api/todo/:id', (req, res) => {
     const id = req.params.id
     // console.log(id);
 
@@ -34,20 +38,41 @@ app.patch('/edit-todo/:id', (req, res) => {
             isFound = true
             break
         }
-        
+
         if (isFound) {
             response.status(201).send({
-              data: { todoContent: request.body.todoContent, id: id },
-              message: "updated successfully!",
+                data: { todoContent: request.body.todoContent, id: id },
+                message: "Todo updated successfully!",
             });
-          } else {
+        } else {
             response.status(200).send({ data: null, message: "not found" });
-          }
+        }
     }
 })
 
 //yaha delete kr rha hn
-app.delete('/delete-todo/:id', (req, res) => {
+app.delete('/api/todo/:id', (req, res) => {
+    const id = req.params.id
+    // console.log(id);
+
+    const isFound = false
+    for (let i = 0; i < todos.length; i++) {
+
+        if (todos[i].id === id) {
+            todos.splice(i, 1)
+            isFound = true
+            break
+        }
+
+        if (isFound) {
+            response.status(201).send({
+                //   data: { todoContent: request.body.todoContent, id: id },
+                message: "Todo delete successfully!",
+            });
+        } else {
+            response.status(200).send({ data: null, message: "not found" });
+        }
+    }
 })
 
 app.listen(port, () => {
