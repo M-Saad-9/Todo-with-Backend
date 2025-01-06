@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 export default function Todo() {
-  const API = "http://localhost:3000"
+  const API = "https://todosapi-six.vercel.app"
 
   const [todos,setTodos] = useState([])
 
