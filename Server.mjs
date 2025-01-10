@@ -40,12 +40,12 @@ app.patch('/api/todo/:id', (req, res) => {
         }
 
         if (isFound) {
-            response.status(201).send({
+            res.status(201).send({
                 data: { todoContent: request.body.todoContent, id: id },
                 message: "Todo updated successfully!",
             });
         } else {
-            response.status(200).send({ data: null, message: "not found" });
+            res.status(200).send({ data: null, message: "not found" });
         }
     }
 })
@@ -65,12 +65,12 @@ app.delete('/api/todo/:id', (req, res) => {
         }
     }
         if (isFound) {
-            response.status(200).send({
+            res.status(200).send({
                 //   data: { todoContent: request.body.todoContent, id: id },
                 message: "Todo delete successfully!",
             });
         } else {
-            response.status(404).send({ data: null, message: "Todo not found" });
+            res.status(404).send({ data: null, message: "Todo not found" });
         }
     
 })

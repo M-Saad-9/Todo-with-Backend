@@ -39,7 +39,7 @@ export default function Todo() {
 
   const deleteTodo = async (id) => {
     try {
-        console.log("Deleting todo with ID:", id);
+        console.log( id);
         const res = await axios.delete(`${API}/api/todo/${id}`);
         // console.log("Deleted successfully:", res);
         getTodos();
