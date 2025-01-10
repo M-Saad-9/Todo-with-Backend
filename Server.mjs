@@ -55,7 +55,7 @@ app.delete('/api/todo/:id', (req, res) => {
     const id = req.params.id
     // console.log(id);
 
-    const isFound = false
+    let isFound = false
     for (let i = 0; i < todos.length; i++) {
 
         if (todos[i].id === id) {
@@ -63,16 +63,16 @@ app.delete('/api/todo/:id', (req, res) => {
             isFound = true
             break
         }
-
+    }
         if (isFound) {
-            response.status(201).send({
+            response.status(200).send({
                 //   data: { todoContent: request.body.todoContent, id: id },
                 message: "Todo delete successfully!",
             });
         } else {
-            response.status(200).send({ data: null, message: "not found" });
+            response.status(404).send({ data: null, message: "Todo not found" });
         }
-    }
+    
 })
 
 app.listen(port, () => {

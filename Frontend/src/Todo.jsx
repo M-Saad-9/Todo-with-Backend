@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 export default function Todo() {
-  const API = "https://todosapi-six.vercel.app"
+  const API = "http://localhost:3000"
 
   const [todos,setTodos] = useState([])
 
@@ -36,6 +36,18 @@ export default function Todo() {
 
     }
   }
+
+  const deleteTodo = async (id) => {
+    try {
+        console.log("Deleting todo with ID:", id);
+        const res = await axios.delete(`${API}/api/todo/${id}`);
+        // console.log("Deleted successfully:", res);
+        getTodos();
+    } catch (error) {
+        console.error("Error deleting todo:", error.response?.data || error.message);
+    }
+};
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
     <div className="bg-white p-6 rounded-lg shadow-lg w-80">
@@ -59,11 +71,15 @@ export default function Todo() {
       <ul className="space-y-4">
         {/* Example Task 1 */}
         {todos?.map((item)=>(
-          <li className="flex justify-between items-center p-4 bg-gray-50 border border-gray-200 rounded-md">
+          <li 
+          key={item.id}
+          className="flex justify-between items-center p-4 bg-gray-50 border border-gray-200 rounded-md">
           <span className="text-gray-700">{item.todoDetail}</span>
           <div className="space-x-3">
             <button className="text-blue-500 hover:text-blue-700">Edit</button>
-            <button className="text-red-500 hover:text-red-700">Delete</button>
+            <button
+            onClick={()=> deleteTodo(item.id)}
+            className="text-red-500 hover:text-red-700">Delete</button>
           </div>
         </li>
         ))}
