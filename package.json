@@ -1,4 +1,16 @@
 {
+    "name": "03.revision",
+    "version": "1.0.0",
+    "engines": {
+      "node": "20.x.x"
+    },
+    "scripts": {
+      "start": "node Server.mjs",
+      "dev": "node --watch Server.mjs"
+    },
+    "author": "",
+    "license": "ISC",
+    "description": "",
   "dependencies": {
     "axios": "^1.7.9"
   }
